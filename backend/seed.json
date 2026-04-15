@@ -1,0 +1,68 @@
+[
+  {
+    "model": "prompts.prompt",
+    "pk": "11111111-1111-1111-1111-111111111111",
+    "fields": {
+      "title": "Cyberpunk cityscape at dusk",
+      "content": "A sprawling cyberpunk city at dusk with neon signs reflecting on rain-soaked streets, flying cars weaving between skyscrapers, holographic advertisements, and a lone figure in a trench coat standing at a crossroads. Cinematic lighting, 8K ultra-detailed, blade runner aesthetic.",
+      "complexity": 8,
+      "is_active": true,
+      "created_by": "admin"
+    }
+  },
+  {
+    "model": "prompts.prompt",
+    "pk": "22222222-2222-2222-2222-222222222222",
+    "fields": {
+      "title": "Peaceful Japanese zen garden",
+      "content": "A serene Japanese zen garden at sunrise with perfectly raked white gravel, mossy stones, a small koi pond, cherry blossom trees dropping petals, bamboo water fountain trickling softly. Mist floating over the water, warm golden light filtering through maple leaves.",
+      "complexity": 4,
+      "is_active": true,
+      "created_by": "admin"
+    }
+  },
+  {
+    "model": "prompts.prompt",
+    "pk": "33333333-3333-3333-3333-333333333333",
+    "fields": {
+      "title": "Abstract geometric dreamscape",
+      "content": "An abstract dreamscape composed of impossible geometric shapes floating in a void of deep violet and electric blue. Tesseracts unfolding in slow motion, Penrose triangles casting no shadows, fractal spirals branching into infinity. Surrealist, Escher-inspired, mathematically precise.",
+      "complexity": 7,
+      "is_active": true,
+      "created_by": "demo"
+    }
+  },
+  {
+    "model": "prompts.prompt",
+    "pk": "44444444-4444-4444-4444-444444444444",
+    "fields": {
+      "title": "Underwater bioluminescent forest",
+      "content": "A forest of towering kelp and coral glowing with bioluminescence in the deep ocean. Jellyfish drifting like living lanterns, schools of translucent fish weaving through shafts of dim blue light from above, sea anemones pulsing in pinks and greens. Ethereal, magical realism.",
+      "complexity": 6,
+      "is_active": true,
+      "created_by": "demo"
+    }
+  },
+  {
+    "model": "prompts.prompt",
+    "pk": "55555555-5555-5555-5555-555555555555",
+    "fields": {
+      "title": "Viking longship in a storm",
+      "content": "A Viking longship cresting a massive wave in a furious North Atlantic storm, dragon prow breaking through sea spray, warriors gripping oars with white knuckles, lightning illuminating their iron helmets, ravens circling overhead, the aurora borealis visible through storm clouds.",
+      "complexity": 7,
+      "is_active": true,
+      "created_by": "admin"
+    }
+  },
+  {
+    "model": "prompts.prompt",
+    "pk": "66666666-6666-6666-6666-666666666666",
+    "fields": {
+      "title": "Cozy autumn reading nook",
+      "content": "A cozy reading nook in a cottage on a rainy autumn afternoon. Overstuffed armchair covered in a plaid blanket, a steaming mug of tea on a side table stacked with well-worn books, golden leaves pressing against a fogged window, a tabby cat curled asleep on a footstool, fireplace crackling nearby.",
+      "complexity": 3,
+      "is_active": true,
+      "created_by": "demo"
+    }
+  }
+]

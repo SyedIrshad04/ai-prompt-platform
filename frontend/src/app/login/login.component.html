@@ -1,0 +1,35 @@
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
+      </svg>
+    </div>
+    <h1>Prompt Platform</h1>
+    <p class="login-sub">Sign in to create and manage prompts.</p>
+
+    <div *ngIf="error" class="alert alert--error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="login-form" novalidate>
+      <div class="field" [class.field--error]="f['username'].touched && f['username'].invalid">
+        <label for="username">Username</label>
+        <input id="username" formControlName="username" type="text" class="input"
+               placeholder="admin" autocomplete="username" />
+      </div>
+      <div class="field" [class.field--error]="f['password'].touched && f['password'].invalid">
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="password" class="input"
+               placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn btn--primary btn--full" [disabled]="form.invalid || loading">
+        <span *ngIf="loading" class="btn-spinner"></span>
+        {{ loading ? 'Signing in…' : 'Sign in' }}
+      </button>
+    </form>
+
+    <p class="login-hint">Demo credentials: <code>admin / admin123</code> or <code>demo / demo123</code></p>
+    <a routerLink="/prompts" class="login-browse">Browse without signing in →</a>
+  </div>
+</div>

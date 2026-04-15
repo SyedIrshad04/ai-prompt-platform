@@ -1,0 +1,80 @@
+<div class="analytics-page">
+  <header class="analytics-header">
+    <div>
+      <h1>Analytics</h1>
+      <p>Real-time insights powered by Redis.</p>
+    </div>
+    <a routerLink="/prompts" class="btn btn--ghost">← Back to library</a>
+  </header>
+
+  <div *ngIf="loading" class="loading-wrap">
+    <div class="spinner"></div><p>Loading analytics…</p>
+  </div>
+  <div *ngIf="error" class="alert alert--error">{{ error }}</div>
+
+  <div *ngIf="!loading && data" class="analytics-grid">
+
+    <!-- Redis status card -->
+    <div class="stat-card">
+      <div class="stat-card__label">Cache status</div>
+      <div class="stat-card__value" [class.status--ok]="data.redis_status === 'connected'"
+           [class.status--down]="data.redis_status !== 'connected'">
+        <span class="status-dot"></span>
+        Redis {{ data.redis_status }}
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__label">Top viewed prompts</div>
+      <div class="stat-card__value">{{ data.top_viewed.length }}</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__label">Total prompts tracked</div>
+      <div class="stat-card__value">{{ data.complexity_distribution | json | jsonCount }}</div>
+    </div>
+
+    <!-- Top viewed prompts -->
+    <section class="section section--wide">
+      <h2>🔥 Top viewed prompts</h2>
+      <div *ngIf="!data.top_viewed.length" class="empty">No views recorded yet. Browse some prompts!</div>
+      <ol class="leaderboard" *ngIf="data.top_viewed.length">
+        <li *ngFor="let p of data.top_viewed; let i = index" class="leaderboard-item">
+          <span class="rank" [class.rank--gold]="i===0" [class.rank--silver]="i===1" [class.rank--bronze]="i===2">
+            {{ i + 1 }}
+          </span>
+          <div class="leaderboard-info">
+            <a [routerLink]="['/prompts', p.id]" class="leaderboard-title">{{ p.title }}</a>
+            <div class="leaderboard-meta">
+              <span class="badge" [ngClass]="'badge--' + complexityClass(p.complexity)">
+                {{ p.complexity }} · {{ complexityLabel(p.complexity) }}
+              </span>
+              <span class="tag" *ngFor="let t of p.tags.slice(0,3)">{{ t }}</span>
+            </div>
+          </div>
+          <div class="leaderboard-views">
+            <span class="view-count">{{ p.view_count }}</span>
+            <span class="view-label">views</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Complexity distribution -->
+    <section class="section section--wide">
+      <h2>📊 Complexity distribution</h2>
+      <div *ngIf="!data.complexity_distribution.length" class="empty">No prompts yet.</div>
+      <div class="bar-chart" *ngIf="data.complexity_distribution.length">
+        <div *ngFor="let d of data.complexity_distribution" class="bar-row">
+          <span class="bar-label">{{ d.complexity }} <em>{{ complexityLabel(d.complexity) }}</em></span>
+          <div class="bar-track">
+            <div class="bar-fill" [ngClass]="'bar--' + complexityClass(d.complexity)"
+                 [style.width.%]="barWidth(d.count)"></div>
+          </div>
+          <span class="bar-count">{{ d.count }}</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

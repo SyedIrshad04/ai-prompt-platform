@@ -1,0 +1,92 @@
+<div class="list-page">
+  <header class="list-header">
+    <div class="list-header__text">
+      <h1>Prompt Library</h1>
+      <p>{{ total }} prompt{{ total !== 1 ? 's' : '' }} available</p>
+    </div>
+    <div class="list-header__actions">
+      <a *ngIf="isLoggedIn" routerLink="/prompts/create" class="btn btn--primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        New Prompt
+      </a>
+      <a routerLink="/analytics" class="btn btn--ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Analytics
+      </a>
+    </div>
+  </header>
+
+  <!-- Filters -->
+  <form [formGroup]="filterForm" class="filters">
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input formControlName="search" type="text" placeholder="Search prompts…" class="input search-input" />
+    </div>
+
+    <select formControlName="complexity" class="input select">
+      <option [ngValue]="null">All complexities</option>
+      <option *ngFor="let c of complexityOptions" [ngValue]="c">Complexity {{ c }}</option>
+    </select>
+
+    <select formControlName="sort" class="input select">
+      <option *ngFor="let s of sortOptions" [value]="s.value">{{ s.label }}</option>
+    </select>
+
+    <button *ngIf="hasActiveFilters" type="button" class="btn btn--ghost btn--sm" (click)="clearFilters()">
+      Clear
+    </button>
+  </form>
+
+  <!-- Error state -->
+  <div *ngIf="error" class="alert alert--error">{{ error }}</div>
+
+  <!-- Loading skeleton -->
+  <div *ngIf="loading" class="grid">
+    <div *ngFor="let _ of [1,2,3,4,5,6]" class="skeleton-card">
+      <div class="skeleton-line skeleton-line--title"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line skeleton-line--short"></div>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && !error && prompts.length === 0" class="empty-state">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+    </svg>
+    <h3>No prompts found</h3>
+    <p>{{ hasActiveFilters ? 'Try adjusting your filters.' : 'Be the first to create a prompt.' }}</p>
+    <button *ngIf="hasActiveFilters" class="btn btn--ghost" (click)="clearFilters()">Clear filters</button>
+  </div>
+
+  <!-- Prompt grid -->
+  <div *ngIf="!loading && prompts.length > 0" class="grid">
+    <app-prompt-card *ngFor="let prompt of prompts" [prompt]="prompt" />
+  </div>
+
+  <!-- Pagination -->
+  <nav *ngIf="totalPages > 1" class="pagination">
+    <button class="page-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+      ←
+    </button>
+    <ng-container *ngFor="let page of pages">
+      <span *ngIf="page === -1" class="page-ellipsis">…</span>
+      <button
+        *ngIf="page !== -1"
+        class="page-btn"
+        [class.page-btn--active]="page === currentPage"
+        (click)="goToPage(page)"
+      >{{ page }}</button>
+    </ng-container>
+    <button class="page-btn" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+      →
+    </button>
+  </nav>
+</div>

@@ -1,0 +1,26 @@
+<article class="card" [routerLink]="['/prompts', prompt.id]">
+  <header class="card__header">
+    <h3 class="card__title">{{ prompt.title }}</h3>
+    <span class="badge" [ngClass]="complexityClass">
+      {{ prompt.complexity }} · {{ complexityLabel }}
+    </span>
+  </header>
+
+  <p class="card__preview">{{ preview }}</p>
+
+  <footer class="card__footer">
+    <div class="card__tags" *ngIf="prompt.tags?.length">
+      <span class="tag" *ngFor="let tag of prompt.tags.slice(0, 4)">{{ tag }}</span>
+    </div>
+    <div class="card__meta">
+      <span class="meta-item" title="Views">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        {{ prompt.view_count ?? 0 }}
+      </span>
+      <span class="meta-item">{{ formattedDate }}</span>
+    </div>
+  </footer>
+</article>
